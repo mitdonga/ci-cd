@@ -1,17 +1,15 @@
 const express = require('express');
 const app = express();
+const Quote = require('inspirational-quotes');
 const port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-	res.status(200).json({ message: "Success.." })
+	const quote = Quote.getQuote()
+	res.send(`${quote.text} - ${quote.author}`)
 })
 
 app.get('/health', (req, res) => {
-	res.status(200).json({ message: "Server is up and running.." })
-})
-
-app.get('/details', (req, res) => {
-	res.status(200).json({ message: "This is a demo project to set up CI pipeline using GitHub Actions" })
+	res.status(200).send("Server is up and running..")
 })
 
 app.listen(port, () => { console.log('Express app running on port', port)});
