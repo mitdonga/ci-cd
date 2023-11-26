@@ -19,7 +19,7 @@ jobs:
         HOST_KEY_DATA: ${{ secrets.HOST_KEY_DATA }}
       run: |
         echo "$SSH_PRIVATE_KEY" > secret.pem && chmod 600 secret.pem
-        mdkir -p ~/.ssh
+        mkdir -p ~/.ssh
         echo "$HOST_KEY_DATA" > ~/.ssh/known_hosts
         ssh -i secret.pem ubuntu@15.206.174.249 "sudo bash ~/deploy.sh"
 
