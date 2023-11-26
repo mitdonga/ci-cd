@@ -21,5 +21,4 @@ jobs:
         echo "$SSH_PRIVATE_KEY" > secret.pem && chmod 600 secret.pem
         mkdir -p ~/.ssh
         echo "$HOST_KEY_DATA" > ~/.ssh/known_hosts
-        ssh -i secret.pem ubuntu@15.206.174.249 "sudo bash ~/deploy.sh"
-
+        ssh -t -i secret.pem ubuntu@15.206.174.249 "sudo bash ~/deploy.sh"

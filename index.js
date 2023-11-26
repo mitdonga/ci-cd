@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/health', (req, res) => {
-	res.status(200).send("Server is up and running..")
+	res.status(200).send("Don't worry, server is up and running..")
 })
 
 app.listen(port, () => { console.log('Express app running on port', port)});
