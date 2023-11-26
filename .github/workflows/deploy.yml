@@ -1,0 +1,25 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: SSH and Deploy to EC2
+      env: 
+        SSH_PRIVATE_KEY: ${{ secrets.AWS_EC2_SSH_PRIVATE_KEY }} 
+        HOST_KEY_DATA: ${{ secrets.HOST_KEY_DATA }}
+      run: |
+        echo "$SSH_PRIVATE_KEY" > secret.pem && chmod 600 secret.pem
+        mdkir -p ~/.ssh
+        echo "$HOST_KEY_DATA" > ~/.ssh/known_hosts
+        ssh -i secret.pem ubuntu@15.206.174.249 "sudo bash ~/deploy.sh"
+

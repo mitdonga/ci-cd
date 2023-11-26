@@ -6,7 +6,7 @@ app.get('/', (req, res) => {
 	res.status(200).json({ message: "Success.." })
 })
 
-app.get('/heath', (req, res) => {
+app.get('/health', (req, res) => {
 	res.status(200).json({ message: "Server is up and running.." })
 })
 
