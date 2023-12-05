@@ -1,0 +1,40 @@
+name: Add Comment When New Issue Opens
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  add-comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print GitHub Context
+        run: echo "${{ github.event }}"
+        shell: bash
+      - name: Add Comment
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueComment = `
+              Thank you for opening this issue! :tada: 
+              We will look into it as soon as possible.
+            `;
+
+            const { data: issues } = await github.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+            });
+
+            // Check if the bot has already commented on the issue
+            const botComment = issues.find(comment => comment.user.login === 'github-actions[bot]');
+            if (!botComment) {
+              await github.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                body: issueComment,
+              });
+            }
